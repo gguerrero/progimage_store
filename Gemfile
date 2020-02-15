@@ -14,7 +14,7 @@ gem 'puma', '~> 4.1'
 # gem 'jbuilder', '~> 2.7'
 
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -24,6 +24,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # gem 'rack-cors'
 
 gem 'active_storage_base64', '~> 1.1.0'
+gem 'fast_jsonapi'
 gem 'uuid', '~> 2.3.0'
 
 group :development, :test do

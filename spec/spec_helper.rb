@@ -104,3 +104,7 @@ RSpec.configure do |config|
     end
   end
 end
+
+def generate_data64_uri(file:, content_type: )
+  "data:#{content_type};base64,#{Base64.encode64(file.read)}"
+end

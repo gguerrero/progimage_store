@@ -51,4 +51,13 @@ Rails.application.configure do
 
   # For HTML error responses use :default, for JSON error response use :api
   config.debug_exception_response_format = :default
+
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
+  config.default_url_options = {
+    host: 'http://localhost:3000'
+  }
+
+  config.action_mailer.default_url_options = {
+    host: 'http://localhost:3000'
+  }
 end
