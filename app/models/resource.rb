@@ -4,5 +4,5 @@ class Resource < ApplicationRecord
   validates :name, presence: true
 
   validates :image, attached: true
-  validates :image, data_base64_uri: true
+  # validates :image, data_base64_uri: true
 end

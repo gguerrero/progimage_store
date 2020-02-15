@@ -1,4 +1,4 @@
-class Database64UriValidator < ActiveModel::EachValidator
+class DataBase64UriValidator < ActiveModel::EachValidator
   DATA_BASE64_URI_REGEXP = %r{/^data:.+;base64,.+$/}.freeze
 
   def validate_each(record, attribute, value)
