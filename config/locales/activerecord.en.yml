@@ -1,0 +1,6 @@
+en:
+  activerecord:
+    errors:
+      messages:
+        attached: is not attached
+        data_base64_uri: has not a valid data URI Base64 format
