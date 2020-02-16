@@ -44,12 +44,12 @@ kind of scopes:
 - Service layer [/app/service](/app/service): Only perform business logic which split the transport layers (HTTP in this case) from the Store layer (ActiveRecord), this layer is crucial (also call context or domain layer) as allows the project to change easily from one transport to another or from one store system to another without affecting each other.
 - Models layer [/app/models](/app/models): Contain the `ActiveRecord` models for storing resources.
 
-### API Endpoints
+## API Endpoints
 The project provides an updated collection for Postman if that's the client you use. You can download and export the [progimage_store_postman_collection.json](/docs/progimage_store_postman_collection.json) anytime.
 
 Scoping all under `/api/v1` in order to provide future api versioning, you'll find 3 endpoints:
 
-#### POST /api/v1/resources/upload
+### POST /api/v1/resources/upload
 **Input as DATA: Base64 URI data**
 ```json
 {
@@ -101,7 +101,7 @@ Scoping all under `/api/v1` in order to provide future api versioning, you'll fi
 }
 ```
 
-#### GET /api/v1/resources/download/4a317f46-7ec0-4ec3-b4b3-9130c2c885e2
+### GET /api/v1/resources/download/4a317f46-7ec0-4ec3-b4b3-9130c2c885e2
 Even though the service mainly is a JSON API, for this endpoint, you can just get this URL as plain html text so it will download the file directly to your machine (if you paste the URI in a browser)
 
 **200 OK Response**
@@ -133,7 +133,7 @@ Even though the service mainly is a JSON API, for this endpoint, you can just ge
 }
 ```
 
-#### POST /api/v1/convert/4a317f46-7ec0-4ec3-b4b3-9130c2c885e2
+### POST /api/v1/convert/4a317f46-7ec0-4ec3-b4b3-9130c2c885e2
 Creates different variants of the image with the provided params and returns and accessible URL for downloading the image in defer mode.
 
 **Input params**
