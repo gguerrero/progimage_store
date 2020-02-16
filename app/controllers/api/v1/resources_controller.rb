@@ -6,12 +6,12 @@ module Api::V1
       resource = Resources::Uploader.upload(upload_params)
 
       if resource.valid?
-        render json: Api::V1::ResourceSerializer.new(resource),
+        render json: Api::V1::ResourceIdSerializer.new(resource),
                status: :created
       else
         render json: resource.errors, status: :unprocessable_entity
       end
-    rescue Resources::NoImageDataError
+    rescue Resources::Errors::NoImageDataError
       render json: { message: 'No image data' }, status: :bad_request
     end
 

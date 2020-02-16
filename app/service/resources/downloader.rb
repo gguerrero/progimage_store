@@ -2,6 +2,8 @@ module Resources
   class Downloader
     class << self
       def download(resource, options = {})
+        return {} unless resource.image.attached?
+
         _variant = transform(resource.image, options)
 
         {
