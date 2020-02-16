@@ -39,7 +39,7 @@ The project provides an updated collection for Postman if that's the client you 
 Scoping all under `/api/v1` in order to provide future api versioning, you'll find 3 endpoints:
 
 #### POST /api/v1/resources/upload
-Input as DATA: Base64 URI data
+**Input as DATA: Base64 URI data**
 ```json
 {
   "name": "Cool Picture",
@@ -49,7 +49,7 @@ Input as DATA: Base64 URI data
 }
 ```
 
-Input as URL
+**Input as URL**
 ```json
 {
   "name": "Cool Picture",
@@ -59,7 +59,7 @@ Input as URL
 }
 ```
 
-201 Created successfully
+**201 Created successfully**
 ```json
 {
     "data": {
@@ -69,7 +69,7 @@ Input as URL
 }
 ```
 
-400 Bad Request
+**400 Bad Request**
 ```json
 {
     "message": "Invalid upload mode error, use 'data' or 'url'"
@@ -81,7 +81,7 @@ Input as URL
 }
 ```
 
-422 Unprocessable Entity
+**422 Unprocessable Entity**
 ```json
 {
     "name": [
@@ -93,7 +93,7 @@ Input as URL
 #### GET /api/v1/resources/download/4a317f46-7ec0-4ec3-b4b3-9130c2c885e2
 Even though the service mainly is a JSON API, for this endpoint, you can just get this URL as plain html text so it will download the file directly to your machine (if you paste the URI in a browser)
 
-200 OK Response
+**200 OK Response**
 
 `Contet-Type: application/json`
 ```json
@@ -115,7 +115,7 @@ Even though the service mainly is a JSON API, for this endpoint, you can just ge
 }
 ```
 
-404 Not Found
+**404 Not Found**
 ```json
 {
     "message": "Not Found"
@@ -125,7 +125,7 @@ Even though the service mainly is a JSON API, for this endpoint, you can just ge
 #### POST /api/v1/convert/4a317f46-7ec0-4ec3-b4b3-9130c2c885e2
 Creates different variants of the image with the provided params and returns and accessible URL for downloading the image in defer mode.
 
-Input params
+**Input params**
 ```json
 {
 	"resize_to_limit": [150, 150],
@@ -134,7 +134,7 @@ Input params
 }
 ```
 
-201 Created Image Variant
+**201 Created Image Variant**
 ```json
 {
     "data": {
@@ -144,7 +144,7 @@ Input params
 }
 ```
 
-404 Not Found
+**404 Not Found**
 ```json
 {
     "message": "Not Found"
@@ -154,12 +154,12 @@ Input params
 ## ActiveStorage
 The project used the Rails lib *ActiveStorage* which provide a bunch capabilities for easily store, retrieve and process images thinking in a performant way (using ActiveJob for enqueuing storage and image processing for example).
 
-Advantages:
+**Advantages:**
 - It provides out of the box compatibility with third party storages like AmazonS3/GCloud for production or non local environments.
 - Handles and organize through ActiveRecord the storage.
 - Enqueue heavy task jobs to `ActiveJob` queues, so the request does not wait for these task to finish: Saving the Image to disk, upload to S3, make variant transformations and so on: this is crucial.
 
-Caveats:
+**Caveats:**
 - It tights your system to one backend, at least from the side of image processing. Externalizing image processing will end up by loosing the variant features that the lib provides and it will require to plan a proper way of proccesing the images on new backends for not losing perfomance.
 
 ## UUID
