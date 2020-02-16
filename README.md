@@ -242,6 +242,6 @@ Finished in 1.36 seconds (files took 2.87 seconds to load)
 
 ## TO-DOs
 - [ ] Improve error messages handling for standarize them accross the APIs.
-- [ ] Dockerize the service in order to allow easy integration with other Microservices
-- [ ] Extract **convert** feature in other microservice in order to handle high demand separately. Maybe we can provide one microservice per time of conversion depending on the expected demand.
+- [ ] Dockerize the service in order to allow easy integration with other Microservices.
+- [ ] Extract **convert** feature in other microservice in order to handle high demand separately. Maybe we can provide one microservice per type of transformation/conversion depending on the expected demand.
 - [ ] Create a CLI/shim/lib for interact with the store/convert services from any other third party client/backend.
