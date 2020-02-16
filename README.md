@@ -1,4 +1,6 @@
 # ProgImage Store
+**NOTE: This rails project is the solution for the [backend challenge of BCG DV](/docs/BCG DV Back End Challenge.pdf)**
+
 ProgImage Store is a RubyOnRails service which provides simple APIs for
 uploading images, downloading in JSON/HTML mode and make different types of conversion on the images defering the conversion to the moment the image is requested.
 
