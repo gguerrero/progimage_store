@@ -35,6 +35,15 @@ Puma starting in single mode...
 Use Ctrl-C to stop
 ```
 
+## CLEAN Architecture
+The projects follows CLEAN architecture principles in order to make different layers for different
+kind of scopes:
+
+- Web layer [/app/controllers](/app/controllers): Only handle the APIs input params, call service layer and serialize the response back.
+- Render layer [/app/serializers](/app/serializers): Only serialize objects for JSON response.
+- Service layer [/app/service](/app/service): Only perform business logic which split the transport layers (HTTP in this case) from the Store layer (ActiveRecord), this layer is crucial (also call context or domain layer) as allows the project to change easily from one transport to another or from one store system to another without affecting each other.
+- Models layer [/app/models](/app/models): Contain the `ActiveRecord` models for storing resources.
+
 ### API Endpoints
 The project provides an updated collection for Postman if that's the client you use. You can download and export the [progimage_store_postman_collection.json](/docs/progimage_store_postman_collection.json) anytime.
 
