@@ -1,9 +1,9 @@
 module Api::V1
   class ResourcesController < ApplicationController
-    before_action :resource, only: %i[download process]
+    before_action :resource, only: %i[download convert]
 
     def upload
-      resource = Resources::Uploader.upload(upload_params)
+      resource = Resources::Uploader.upload(upload_params.to_h)
 
       if resource.valid?
         render json: Api::V1::ResourceIdSerializer.new(resource),
@@ -11,7 +11,8 @@ module Api::V1
       else
         render json: resource.errors, status: :unprocessable_entity
       end
-    rescue Resources::Errors::NoImageDataError => e
+    rescue Resources::Errors::NoImageSourceError,
+           Resources::Errors::InvalidUploadModeError => e
       render json: { message: e.message }, status: :bad_request
     end
 
@@ -46,7 +47,7 @@ module Api::V1
     private
 
     def upload_params
-      params.permit(:name, :description, :image)
+      params.permit(:name, :description, :mode, :source)
     end
 
     def process_params

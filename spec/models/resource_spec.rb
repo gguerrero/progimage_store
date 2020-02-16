@@ -26,7 +26,7 @@ RSpec.describe Resource do
     let(:resource) { Resource.new name: 'Ruby', description: 'Is ruby logo!' }
 
     it 'creates a resource and autogenerate the UUID' do
-      resource.attach_image(base64_data_uri)
+      resource.attach_image_from_data(base64_data_uri)
 
       expect(resource).to be_valid
       expect(resource.save).to be true
@@ -40,23 +40,37 @@ RSpec.describe Resource do
     end
   end
 
-  context 'attach_image' do
+  context 'attaching image from data' do
     let(:resource) { Resource.new name: 'Ruby', description: 'Is ruby logo!' }
 
     it 'returns false and add errors when the input data does not match the format' do
       invalid_date64_uri = 'invalid_data:image/png;base32,NotAValidData'
 
-      expect(resource.attach_image(invalid_date64_uri)).to be_nil
+      expect(resource.attach_image_from_data(invalid_date64_uri)).to be_nil
       expect(resource.errors[:image]).to eq [
         I18n.t('activerecord.errors.messages.invalid_data_base64_uri')
       ]
     end
 
     it 'attached the image with a composed filename from name + content_type' do
-      resource.attach_image(base64_data_uri)
+      resource.attach_image_from_data(base64_data_uri)
 
       expect(resource.image).to be_attached
       expect(resource.image.filename.to_s).to eq 'ruby.png'
+    end
+  end
+
+  context 'attaching with from remote URL' do
+    let(:image_url) { 'https://progimage.com/ruby.png' }
+    let(:resource) { Resource.new name: 'Ruby', description: 'Is ruby logo!' }
+
+    it 'attached the image with a composed filename from name' do
+      stubbed_image_request(url: image_url, file: ruby_png)
+
+      resource.attach_image_from_url(image_url)
+
+      expect(resource.image).to be_attached
+      expect(resource.image.filename.to_s).to eq 'ruby'
     end
   end
 end

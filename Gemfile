@@ -25,10 +25,12 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'active_storage_base64', '~> 1.1.0'
 gem 'fast_jsonapi'
+gem 'httparty'
 gem 'uuid', '~> 2.3.0'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'webmock'
 end
 
 group :development do

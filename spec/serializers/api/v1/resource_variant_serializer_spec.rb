@@ -7,7 +7,7 @@ RSpec.describe Api::V1::ResourceVariantSerializer do
   }
   let(:variant) do
     resource = Resource.new(name: 'Ruby', description: 'Is ruby logo!')
-    resource.attach_image(base64_data_uri)
+    resource.attach_image_from_data(base64_data_uri)
     resource.save!
 
     resource.image.variant(convert: 'jpg')

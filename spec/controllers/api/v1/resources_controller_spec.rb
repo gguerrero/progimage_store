@@ -5,33 +5,67 @@ RSpec.describe Api::V1::ResourcesController do
   let(:base64_data_uri) {
     generate_data64_uri file: ruby_png, content_type: 'image/png'
   }
-  let(:params) do
-    {
-      name: 'Ruby',
-      description: 'A description',
-      image: base64_data_uri
-    }
-  end
 
   describe 'POST /api/v1/resources/upload', type: :request do
-    it 'returns 400 bad request when no image data is provided' do
-      params.delete(:image)
-      post api_v1_resources_upload_path, params: params, as: :json
+    let(:image_url) { 'https://progimage.com/ruby.png' }
+    let(:data_params) do
+      {
+        name: 'Ruby',
+        description: 'A description',
+        mode: 'data',
+        source: base64_data_uri
+      }
+    end
+
+    let(:url_params) do
+      {
+        name: 'Ruby',
+        description: 'A description',
+        mode: 'url',
+        source: image_url
+      }
+    end
+
+    it 'returns 400 bad request when no image source given is provided' do
+      data_params.delete(:source)
+      post api_v1_resources_upload_path, params: data_params, as: :json
 
       expect(response).to have_http_status(:bad_request)
-      expect(json_response).to eq('message' => 'No image data')
+      expect(json_response).to eq('message' => 'No image source given')
+    end
+
+    it 'returns 400 bad request when invalid mode is provided' do
+      data_params[:mode] = 'invalid_mode'
+      post api_v1_resources_upload_path, params: data_params, as: :json
+
+      expect(response).to have_http_status(:bad_request)
+      expect(json_response).to eq(
+        'message' => "Invalid upload mode error, use 'data' or 'url'"
+      )
     end
 
     it 'return 422 unprocessable entity when invalid params are given' do
-      params.delete(:name)
-      post api_v1_resources_upload_path, params: params, as: :json
+      data_params.delete(:name)
+      post api_v1_resources_upload_path, params: data_params, as: :json
 
       expect(response).to have_http_status(:unprocessable_entity)
       expect(json_response).to eq('name' => ["can't be blank"])
     end
 
-    it 'returns 201 created with valid params and upload successfully' do
-      post api_v1_resources_upload_path, params: params, as: :json
+    it 'returns 201 created with valid data params' do
+      post api_v1_resources_upload_path, params: data_params, as: :json
+
+      expect(response).to have_http_status(:created)
+
+      resource_id = json_response['data']['id']
+      expect(UUID.validate(resource_id)).to be true
+      expect(Resource.exists?(resource_id)).to be true
+    end
+
+    it 'returns 201 created with valid URL mode params' do
+      stubbed_image_request(url: image_url, file: ruby_png)
+
+      post api_v1_resources_upload_path, params: url_params, as: :json
 
       expect(response).to have_http_status(:created)
 
@@ -44,7 +78,7 @@ RSpec.describe Api::V1::ResourcesController do
   describe 'GET /api/v1/resources/download', type: :request do
     let(:resource) do
       resource = Resource.new(name: 'Ruby', description: 'Is ruby logo!')
-      resource.attach_image(base64_data_uri)
+      resource.attach_image_from_data(base64_data_uri)
       resource.save!
 
       resource
@@ -91,7 +125,7 @@ RSpec.describe Api::V1::ResourcesController do
   describe 'POST /api/v1/resources/convert', type: :request do
     let(:resource) do
       resource = Resource.new(name: 'Ruby', description: 'Is ruby logo!')
-      resource.attach_image(base64_data_uri)
+      resource.attach_image_from_data(base64_data_uri)
       resource.save!
 
       resource

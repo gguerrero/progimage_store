@@ -7,7 +7,7 @@ RSpec.describe Api::V1::ResourceIdSerializer do
   }
   let(:resource) do
     resource = Resource.new(name: 'Ruby', description: 'Is ruby logo!')
-    resource.attach_image(base64_data_uri)
+    resource.attach_image_from_data(base64_data_uri)
     resource.save!
 
     resource
