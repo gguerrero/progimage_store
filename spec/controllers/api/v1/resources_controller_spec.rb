@@ -66,6 +66,15 @@ RSpec.describe Api::V1::ResourcesController do
       )
     end
 
+    it 'returns 404 not found error when the image is not attached' do
+      resource.image.purge
+
+      get api_v1_resources_download_path(resource.id), as: :html
+
+      expect(response).to have_http_status(:not_found)
+      expect(json_response).to eq('message' => 'Image not found for resource')
+    end
+
     it 'send data with the raw image stream' do
       get api_v1_resources_download_path(resource.id), as: :html
 
@@ -76,6 +85,44 @@ RSpec.describe Api::V1::ResourcesController do
 
       ruby_png.rewind
       expect(response.body.size).to eq ruby_png.size
+    end
+  end
+
+  describe 'POST /api/v1/resources/convert', type: :request do
+    let(:resource) do
+      resource = Resource.new(name: 'Ruby', description: 'Is ruby logo!')
+      resource.attach_image(base64_data_uri)
+      resource.save!
+
+      resource
+    end
+    let(:convert_params) do
+      {
+        convert: 'jpg',
+        resize_to_limit: [100, 100],
+        rotate: -90
+      }
+    end
+
+    it 'returns 404 not found when the image is not attached' do
+      resource.image.purge
+
+      post api_v1_resources_convert_path(resource.id), params: convert_params,
+                                                       as: :json
+
+      expect(response).to have_http_status(:not_found)
+      expect(json_response).to eq('message' => 'Image not found for resource')
+    end
+
+    it 'returns a variant image URL and key pointing to the image inline' do
+      post api_v1_resources_convert_path(resource.id), params: convert_params,
+                                                       as: :json
+
+      expect(response).to have_http_status(:created)
+      expect(json_response['data']['key']).not_to be_blank
+      expect(json_response['data']['variantImageUrl']).not_to be_blank
+
+      get json_response['data']['variantImageUrl']
     end
   end
 end

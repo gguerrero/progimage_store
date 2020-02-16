@@ -8,6 +8,10 @@ Rails.application.routes.draw do
 
       get  '/resources/download/:id', to: 'resources#download',
                                       as: :resources_download
+
+      post '/resources/convert/:id', to: 'resources#convert',
+                                     as: :resources_convert
+
     end
   end
 end

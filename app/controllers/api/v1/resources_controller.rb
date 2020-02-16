@@ -1,6 +1,6 @@
 module Api::V1
   class ResourcesController < ApplicationController
-    before_action :resource, only: %i[download]
+    before_action :resource, only: %i[download process]
 
     def upload
       resource = Resources::Uploader.upload(upload_params)
@@ -11,8 +11,8 @@ module Api::V1
       else
         render json: resource.errors, status: :unprocessable_entity
       end
-    rescue Resources::Errors::NoImageDataError
-      render json: { message: 'No image data' }, status: :bad_request
+    rescue Resources::Errors::NoImageDataError => e
+      render json: { message: e.message }, status: :bad_request
     end
 
     def download
@@ -22,15 +22,25 @@ module Api::V1
         end
 
         format.html do
-          download = Resources::Downloader.download(
-            resource, download_params.to_h
-          )
+          download = Resources::Downloader.download(resource)
 
           send_data download[:data],
                     filename: download[:filename],
                     type: download[:content_type]
+        rescue Resources::Errors::ImageNotFoundError => e
+          render json: { message: e.message }, status: :not_found
         end
       end
+    end
+
+    def convert
+      variant = Resources::ImageProcessor.process(resource, process_params.to_h)
+
+      render json: Api::V1::ResourceVariantSerializer.new(variant),
+             status: :created
+
+    rescue Resources::Errors::ImageNotFoundError => e
+      render json: { message: e.message }, status: :not_found
     end
 
     private
@@ -39,8 +49,8 @@ module Api::V1
       params.permit(:name, :description, :image)
     end
 
-    def download_params
-      params.permit(:convert, :resize_to_limit, :rotate)
+    def process_params
+      params.permit(:convert, :format, :flip, :rotate, resize_to_limit: [])
     end
 
     def resource
