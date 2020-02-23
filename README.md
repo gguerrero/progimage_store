@@ -35,6 +35,80 @@ Puma starting in single mode...
 Use Ctrl-C to stop
 ```
 
+## Docker
+In case you want to run the app with docker in production mode, you can build the image and use the `docker-compose.yml` config to run it locally. Inside `./docker/progimage_store.dev.env` you'll find for related config for running the docker image, change it as required (DB connection, ports, etc.).
+
+Building the image:
+```
+$ docker build . -t progimage_store
+Sending build context to Docker daemon  256.5kB
+Step 1/12 : FROM ruby:2.6.5
+ ---> dcb28425fa35
+Step 2/12 : RUN apt-get update -qq &&   apt-get install -y imagemagick postgresql-client
+ ---> Using cache
+ ---> 6b6630ee5f52
+Step 3/12 : RUN mkdir /progimage_store
+ ---> Using cache
+ ---> d4c49f56026a
+Step 4/12 : WORKDIR /progimage_store
+ ---> Using cache
+ ---> 7b327b5c3a60
+Step 5/12 : COPY Gemfile /progimage_store/Gemfile
+ ---> Using cache
+ ---> 2b147f86f2db
+Step 6/12 : COPY Gemfile.lock /progimage_store/Gemfile.lock
+ ---> Using cache
+ ---> 7a036245572a
+Step 7/12 : RUN bundle install --binstubs
+ ---> Using cache
+ ---> 700d2e748437
+Step 8/12 : COPY . /progimage_store
+ ---> 5895c4f91a7e
+Step 9/12 : COPY docker/entrypoint.sh /usr/bin/
+ ---> 4bfaa45e0a86
+Step 10/12 : RUN chmod +x /usr/bin/entrypoint.sh
+ ---> Running in 118267469b97
+Removing intermediate container 118267469b97
+ ---> 0ce40b4edf86
+Step 11/12 : ENTRYPOINT ["entrypoint.sh"]
+ ---> Running in 7377d6e7c368
+Removing intermediate container 7377d6e7c368
+ ---> a3a09f58c4cd
+Step 12/12 : CMD ["bin/rails", "server", "-b", "0.0.0.0"]
+ ---> Running in 40f58645967d
+Removing intermediate container 40f58645967d
+ ---> 02331013f252
+Successfully built 02331013f252
+Successfully tagged progimage_store:latest
+```
+
+And running docker compose:
+```
+$ docker-compose up progimage_store
+Starting progimage_store ... done
+Attaching to progimage_store
+progimage_store    | Database 'progimage_store_production' already exists
+progimage_store    | D, [2020-02-23T12:17:17.549643 #7] DEBUG -- :    (7.4ms)  CREATE DATABASE "progimage_store_production" ENCODING = 'unicode'
+progimage_store    | D, [2020-02-23T12:17:19.068747 #10] DEBUG -- :    (1.3ms)  SELECT pg_try_advisory_lock(749644142343612915)
+progimage_store    | D, [2020-02-23T12:17:19.087649 #10] DEBUG -- :    (2.7ms)  SELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC
+progimage_store    | D, [2020-02-23T12:17:19.097837 #10] DEBUG -- :   ActiveRecord::InternalMetadata Load (1.9ms)  SELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2  [["key", "environment"], ["LIMIT", 1]]
+progimage_store    | D, [2020-02-23T12:17:19.121696 #10] DEBUG -- :    (2.4ms)  SELECT pg_advisory_unlock(749644142343612915)
+progimage_store    | => Booting Puma
+progimage_store    | => Rails 6.0.2.1 application starting in production
+progimage_store    | => Run `rails server --help` for more startup options
+progimage_store    | Puma starting in single mode...
+progimage_store    | * Version 4.3.1 (ruby 2.6.5-p114), codename: Mysterious Traveller
+progimage_store    | * Min threads: 5, max threads: 5
+progimage_store    | * Environment: production
+progimage_store    | * Listening on tcp://0.0.0.0:3001
+progimage_store    | Use Ctrl-C to stop
+```
+
+In case you prefer to use a dockerized PostgreSQL version you can boot it with:
+```
+$ docker-compose up postgres
+```
+
 ## CLEAN Architecture
 The projects follows CLEAN architecture principles in order to make different layers for different
 kind of scopes:
