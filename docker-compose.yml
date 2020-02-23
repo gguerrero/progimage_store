@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  progimage_store:
+    image: progimage_store:latest
+    container_name: progimage_store
+    env_file:
+      - docker/progimage_store.dev.env
+    ports:
+      - 3001:3001
+    # depends_on:
+    #   - postgres
+
+  postgres:
+    image: postgres:10-alpine
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+networks:
+  default:
+    external:
+      name: local-environment
