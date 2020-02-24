@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "7a87c105-83e0-4309-a174-330bb0b874cb",
-		"name": "ProgImage",
+		"name": "ProgImage Store",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -27,12 +27,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/v1/resources/upload",
+					"raw": "http://localhost:3001/api/v1/resources/upload",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3001",
 					"path": [
 						"api",
 						"v1",
@@ -44,15 +44,15 @@
 			"response": []
 		},
 		{
-			"name": "Upload New Resource Copy",
+			"name": "Upload New Resource from URI",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
@@ -65,12 +65,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/v1/resources/upload",
+					"raw": "http://localhost:3001/api/v1/resources/upload",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3001",
 					"path": [
 						"api",
 						"v1",
@@ -93,18 +93,18 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3000/api/v1/resources/download/4a317f46-7ec0-4ec3-b4b3-9130c2c885e2",
+					"raw": "http://localhost:3001/api/v1/resources/download/d86aaee4-a195-4432-8793-cf9ad47c9505",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3001",
 					"path": [
 						"api",
 						"v1",
 						"resources",
 						"download",
-						"4a317f46-7ec0-4ec3-b4b3-9130c2c885e2"
+						"d86aaee4-a195-4432-8793-cf9ad47c9505"
 					]
 				}
 			},
@@ -124,7 +124,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"resize_to_limit\": [50, 50],\n\t\"rotate\": 90,\n\t\"flip\": true,\n\t\"convert\": \"jpeg\"\n}",
+					"raw": "{\n\t\"resize_to_limit\": [150, 150],\n\t\"rotate\": 170,\n\t\"convert\": \"jpeg\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -132,18 +132,18 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/v1/resources/convert/3c46a693-be92-4247-8dd3-da8546531699",
+					"raw": "http://localhost:3001/api/v1/resources/convert/f1bf0c18-13a8-4d13-aff2-9ed98d567e46",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3000",
+					"port": "3001",
 					"path": [
 						"api",
 						"v1",
 						"resources",
 						"convert",
-						"3c46a693-be92-4247-8dd3-da8546531699"
+						"f1bf0c18-13a8-4d13-aff2-9ed98d567e46"
 					]
 				}
 			},

@@ -30,8 +30,8 @@ Puma starting in single mode...
 * Version 4.3.1 (ruby 2.6.5-p114), codename: Mysterious Traveller
 * Min threads: 5, max threads: 5
 * Environment: development
-* Listening on tcp://127.0.0.1:3000
-* Listening on tcp://[::1]:3000
+* Listening on tcp://127.0.0.1:3001
+* Listening on tcp://[::1]:3001
 Use Ctrl-C to stop
 ```
 
@@ -194,7 +194,7 @@ Even though the service mainly is a JSON API, for this endpoint, you can just ge
             "imageData": "iVBORw0KGgoAAAA..."
         },
         "links": {
-            "imageUrl": "http://localhost:3000/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6ff48d3d47bdacdd21abdaef2f490d726ba265e3/elixir_logo"
+            "imageUrl": "http://localhost:3001/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBDdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--6ff48d3d47bdacdd21abdaef2f490d726ba265e3/elixir_logo"
         }
     }
 }
@@ -224,7 +224,7 @@ Creates different variants of the image with the provided params and returns and
 {
     "data": {
         "key": "variants/3n67p3dmqitxhygncirz6xn3yc4e/1f4ca14608211bae27d4d6ce49e2e514b5c6c9d2fb9538c533a27c9c22e63d18",
-        "variantImageUrl": "http://localhost:3000/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--442d179cc984dfb91bb1bc9de24abc2a5fe07410/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDRG9NWTI5dWRtVnlkRWtpQ1dwd1pXY0dPZ1pGVkRvTGNtOTBZWFJsYVFHcU9oUnlaWE5wZW1WZmRHOWZiR2x0YVhSYkIya0JsbWtCbGc9PSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--4d7eb8d7eddc7921b72fedc5937cd9c1d2770264/elixir_logo"
+        "variantImageUrl": "http://localhost:3001/rails/active_storage/representations/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBCZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--442d179cc984dfb91bb1bc9de24abc2a5fe07410/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdDRG9NWTI5dWRtVnlkRWtpQ1dwd1pXY0dPZ1pGVkRvTGNtOTBZWFJsYVFHcU9oUnlaWE5wZW1WZmRHOWZiR2x0YVhSYkIya0JsbWtCbGc9PSIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--4d7eb8d7eddc7921b72fedc5937cd9c1d2770264/elixir_logo"
     }
 }
 ```
