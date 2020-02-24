@@ -7,7 +7,7 @@ WORKDIR /progimage_store
 
 COPY Gemfile /progimage_store/Gemfile
 COPY Gemfile.lock /progimage_store/Gemfile.lock
-RUN bundle install --binstubs
+RUN bundle install
 COPY . /progimage_store
 
 # Add a script to be executed every time the container starts.

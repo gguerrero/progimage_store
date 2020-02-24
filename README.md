@@ -110,8 +110,8 @@ $ docker-compose up postgres
 ```
 
 ## CLEAN Architecture
-The projects follows CLEAN architecture principles in order to make different layers for different
-kind of scopes:
+The projects follows CLEAN architecture principles in order to make different
+layers for different kind of scopes:
 
 - Web layer [/app/controllers](/app/controllers): Only handle the APIs input params, call service layer and serialize the response back.
 - Render layer [/app/serializers](/app/serializers): Only serialize objects for JSON response.
@@ -322,9 +322,3 @@ Resources::Uploader
 Finished in 1.36 seconds (files took 2.87 seconds to load)
 29 examples, 0 failures
 ```
-
-## TO-DOs
-- [ ] Improve error messages handling for standarize them accross the APIs.
-- [ ] Dockerize the service in order to allow easy integration with other Microservices.
-- [ ] Extract **convert** feature in other microservice in order to handle high demand separately. Maybe we can provide one microservice per type of transformation/conversion depending on the expected demand.
-- [ ] Create a CLI/shim/lib for interact with the store/convert services from any other third party client/backend.
