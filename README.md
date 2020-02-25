@@ -209,6 +209,8 @@ Even though the service mainly is a JSON API, for this endpoint, you can just ge
 
 ### POST /api/v1/convert/4a317f46-7ec0-4ec3-b4b3-9130c2c885e2
 Creates different variants of the image with the provided params and returns and accessible URL for downloading the image in defer mode.
+*DEPRECATION: This endpoint will be deprecated as soon as all the required transformation/conversion provided in this endpoint
+are covered by new microservices that provides the same image transformations features.*
 
 **Input params**
 ```json
